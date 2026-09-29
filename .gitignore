@@ -1,0 +1,18 @@
+.work/
+upstream/
+node_modules/
+launcher/node_modules/
+launcher/artifacts/
+launcher/release/
+*.log
+
+# Local secrets / credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+secrets.json
