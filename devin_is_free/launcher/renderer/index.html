@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Devin is Free</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <div class="eyebrow">CODEX × DEVIN</div>
+        <h1>Devin is Free</h1>
+        <p>Devin CLI의 SWE-2를 Codex 모델 선택기에서 사용합니다.</p>
+      </div>
+      <span id="appVersion" class="pill">v0.4.0</span>
+    </header>
+
+    <section class="hero card">
+      <div>
+        <span id="overallDot" class="dot"></span>
+        <strong id="overallTitle">상태 확인 중...</strong>
+        <p id="overallText">Devin CLI, 프록시, Codex 연결 상태를 확인합니다.</p>
+      </div>
+      <button id="refreshBtn" class="ghost">새로고침</button>
+    </section>
+
+    <section id="progressWrap" class="card progress-card">
+      <div class="progress-head"><strong>진행도</strong><span id="progressText">대기 중</span></div>
+      <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+      <button id="testBtn" class="test-button">SWE-2 전체 연결 테스트</button>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>1. Devin CLI</h2>
+        <div class="status-row"><span>설치</span><b id="cliInstalled">확인 중</b></div>
+        <div class="status-row"><span>ACP</span><b id="cliAcp">확인 중</b></div>
+        <div class="status-row"><span>로그인</span><b id="cliAuth">확인 중</b></div>
+        <div class="actions">
+          <button id="installBtn">공식 CLI 설치</button>
+          <button id="loginBtn" class="secondary">로그인</button>
+          <button id="updateBtn" class="secondary">업데이트</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>2. Codex 연결</h2>
+        <div class="status-row"><span>로컬 프록시</span><b id="proxyStatus">확인 중</b></div>
+        <div class="status-row"><span>Codex 적용</span><b id="routeStatus">확인 중</b></div>
+        <div class="mono" id="routeText">http://127.0.0.1:17842/v1</div>
+        <div class="actions">
+          <button id="applyBtn">Codex에 적용</button>
+          <button id="restoreBtn" class="danger">원상복구</button>
+        </div>
+      </article>
+    </section>
+
+    <section class="card">
+      <h2>3. GitHub 연결</h2>
+      <div class="status-row"><span>GitHub CLI</span><b id="githubInstalled">확인 중</b></div>
+      <div class="status-row"><span>GitHub 로그인</span><b id="githubAuth">확인 중</b></div>
+      <div class="status-row"><span>계정</span><b id="githubUser">-</b></div>
+      <div class="status-row"><span>Devin GitHub 스킬</span><b id="githubSkill">확인 중</b></div>
+      <div class="actions">
+        <button id="githubInstallBtn">GitHub CLI 설치</button>
+        <button id="githubLoginBtn" class="secondary">GitHub 로그인</button>
+        <button id="githubSkillBtn" class="secondary">GitHub 스킬 설치</button>
+        <button id="githubTestBtn" class="ghost">GitHub 연결 테스트</button>
+      </div>
+      <p class="hint">로그인된 GitHub CLI와 Devin 전역 스킬을 이용해 저장소 작업을 수행합니다.</p>
+    </section>
+
+    <section class="card">
+      <h2>4. 작업 설정</h2>
+      <label class="field">
+        <span>기본 프로젝트 폴더</span>
+        <div class="path-row"><code id="workDir">선택하지 않음</code><button id="workDirBtn" class="secondary">폴더 선택</button></div>
+      </label>
+      <label class="toggle"><input id="allowTools" type="checkbox" /><span>Devin이 파일 수정·명령 실행을 요청하면 자동 허용</span></label>
+      <label class="toggle"><input id="autoStart" type="checkbox" /><span>Windows 로그인 시 자동 실행</span></label>
+      <p class="hint">도구 자동 허용을 켜면 Devin이 선택한 프로젝트 폴더에서 직접 코드를 수정하고 명령을 실행할 수 있습니다.</p>
+    </section>
+
+    <section class="card foot-card">
+      <div>
+        <h2>사용법</h2>
+        <p>상태를 맞춘 뒤 Codex에서 Devin SWE-2를 선택하고 GitHub 저장소 작업을 요청하세요.</p>
+      </div>
+      <div class="actions compact">
+        <button id="restartBtn" class="secondary">프록시 재시작</button>
+        <button id="configBtn" class="secondary">Codex 설정 열기</button>
+        <button id="docsBtn" class="ghost">Devin 문서</button>
+      </div>
+    </section>
+
+    <div id="toast" class="toast"></div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

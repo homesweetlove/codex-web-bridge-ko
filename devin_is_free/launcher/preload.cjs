@@ -1,0 +1,25 @@
+const { contextBridge, ipcRenderer } = require('electron');
+
+contextBridge.exposeInMainWorld('devinApp', {
+  status: () => ipcRenderer.invoke('status'),
+  refresh: () => ipcRenderer.invoke('refresh'),
+  onStatus: callback => ipcRenderer.on('status', (_event, data) => callback(data)),
+  onProgress: callback => ipcRenderer.on('progress', (_event, data) => callback(data)),
+  startProxy: () => ipcRenderer.invoke('proxy:start'),
+  restartProxy: () => ipcRenderer.invoke('proxy:restart'),
+  applyRoute: () => ipcRenderer.invoke('route:apply'),
+  restoreRoute: () => ipcRenderer.invoke('route:restore'),
+  installDevin: () => ipcRenderer.invoke('devin:install'),
+  loginDevin: () => ipcRenderer.invoke('devin:login'),
+  updateDevin: () => ipcRenderer.invoke('devin:update'),
+  installGithub: () => ipcRenderer.invoke('github:install'),
+  loginGithub: () => ipcRenderer.invoke('github:login'),
+  installGithubSkill: () => ipcRenderer.invoke('github:skill-install'),
+  testGithub: () => ipcRenderer.invoke('github:test'),
+  chooseWorkDir: () => ipcRenderer.invoke('workdir:choose'),
+  setAllowTools: value => ipcRenderer.invoke('settings:allowTools', value),
+  setAutoStart: value => ipcRenderer.invoke('settings:autoStart', value),
+  fullTest: () => ipcRenderer.invoke('test:full'),
+  openCodexConfig: () => ipcRenderer.invoke('open:codexConfig'),
+  openDocs: () => ipcRenderer.invoke('open:docs'),
+});

@@ -1,0 +1,53 @@
+{
+  "name": "devin-is-free",
+  "version": "0.4.4",
+  "private": true,
+  "type": "module",
+  "main": "launcher/main.cjs",
+  "description": "Windows tray launcher and Codex Responses proxy for Devin SWE-2 through the official Devin CLI/ACP.",
+  "scripts": {
+    "start": "node src/server.mjs",
+    "app": "electron .",
+    "check": "node --check src/server.mjs && node --check src/body.mjs && node --check src/acp.mjs && node --check src/protocol.mjs && node --check src/upstream.mjs && node --check launcher/main.cjs && node --check launcher/preload.cjs && node --check launcher/codex-state.cjs && node --check launcher/codex-model.cjs && node --check launcher/codex-mode.cjs && node --check launcher/devin-cli.cjs && node --check launcher/github-cli.cjs && node --check launcher/github-skill.cjs && node --check launcher/proxy-process.cjs && node --check launcher/renderer/app.js",
+    "package": "electron-builder --win nsis --x64"
+  },
+  "devDependencies": {
+    "electron": "^38.0.0",
+    "electron-builder": "^26.0.0"
+  },
+  "build": {
+    "appId": "dev.devinisfree.launcher",
+    "productName": "Devin is Free",
+    "artifactName": "Devin-is-Free-Setup-${version}.${ext}",
+    "directories": {
+      "output": "artifacts"
+    },
+    "files": [
+      "launcher/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "src",
+        "to": "proxy"
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ],
+      "requestedExecutionLevel": "asInvoker"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Devin is Free",
+      "include": "launcher/installer.nsh"
+    }
+  }
+}
