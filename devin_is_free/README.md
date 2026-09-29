@@ -1,6 +1,6 @@
 # Devin SWE-2 for Codex — standalone proxy
 
-`gpt_is_free` 본체와 코드를 공유하지 않는 별도 프로그램입니다. Codex의 로컬 Responses 경로에 `Devin SWE-2` 모델을 하나 추가하고, 그 모델을 선택했을 때만 **공식 Devin CLI의 `devin acp`** 로 요청을 전달합니다.
+`codex-web-bridge-ko` 본체와 코드를 공유하지 않는 별도 프로그램입니다. Codex의 로컬 Responses 경로에 `Devin SWE-2` 모델을 하나 추가하고, 그 모델을 선택했을 때만 **공식 Devin CLI의 `devin acp`** 로 요청을 전달합니다.
 
 이 프로그램은 Devin 인증이나 사용량 정책을 우회하지 않습니다. PC에 로그인된 공식 Devin CLI 세션과 해당 계정에 실제로 제공되는 SWE-2 entitlement를 그대로 사용합니다.
 
@@ -18,7 +18,7 @@ http://127.0.0.1:17842/v1
         +-- 나머지 모델 ------> 이전 Codex route 또는 공식 Codex backend
 ```
 
-기존 `gpt_is_free`가 `http://127.0.0.1:17841/v1`을 사용 중이면 `setup-codex.ps1`이 그 주소를 자동으로 기억합니다. 이후 17842 프록시가 17841을 upstream으로 사용하므로 기존 ChatGPT Web 모델을 유지하면서 `Devin SWE-2`를 추가할 수 있습니다.
+기존 `codex-web-bridge-ko`가 `http://127.0.0.1:17841/v1`을 사용 중이면 `setup-codex.ps1`이 그 주소를 자동으로 기억합니다. 이후 17842 프록시가 17841을 upstream으로 사용하므로 기존 ChatGPT Web 모델을 유지하면서 `Devin SWE-2`를 추가할 수 있습니다.
 
 ## 요구 사항
 
@@ -122,7 +122,7 @@ Invoke-RestMethod `
 - Responses SSE 텍스트 스트리밍
 - `/v1/chat/completions`: 직접 진단용 비스트리밍 endpoint
 - `responses/compact`, search, image endpoint passthrough
-- 기존 `gpt_is_free` 17841 route와 체인 가능
+- 기존 `codex-web-bridge-ko` 17841 route와 체인 가능
 - Devin ACP `session/new`의 `configOptions`에서 SWE-2와 reasoning 옵션을 동적으로 탐색
 
 MVP에서는 Devin의 내부 도구 실행 결과를 Codex의 개별 tool-call 카드로 재구성하지 않습니다. Devin은 자신의 ACP 세션 안에서 작업하고 Codex에는 최종 assistant 텍스트를 스트리밍합니다. 파일 변경은 같은 로컬 작업 디렉터리를 사용하면 Codex/에디터의 파일 감시를 통해 보이게 됩니다.
