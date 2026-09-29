@@ -1,0 +1,85 @@
+name: Build and Release Korean Windows EXE
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: windows-latest-release
+  cancel-in-progress: true
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Bun 1.4.0
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.0
+
+      - name: Prepare Korean patched source
+        shell: pwsh
+        run: ./scripts/bootstrap-ko.ps1
+
+      - name: Install root dependencies
+        shell: pwsh
+        working-directory: .work/codex-chatgpt-web
+        run: bun install --frozen-lockfile
+
+      - name: Install launcher dependencies
+        shell: pwsh
+        working-directory: .work/codex-chatgpt-web/launcher
+        run: bun install --frozen-lockfile
+
+      - name: Build Windows installer
+        shell: pwsh
+        working-directory: .work/codex-chatgpt-web/launcher
+        run: bun run package:win
+
+      - name: Locate installer
+        id: installer
+        shell: pwsh
+        run: |
+          $files = Get-ChildItem ".work/codex-chatgpt-web/launcher/release" -Filter "*.exe" -File
+          if (-not $files) {
+            throw "Windows installer EXE was not produced."
+          }
+          $files | ForEach-Object { Write-Host "Built: $($_.FullName)" }
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: codex-web-bridge-ko-windows
+          path: .work/codex-chatgpt-web/launcher/release/*.exe
+          if-no-files-found: error
+
+      - name: Publish latest GitHub Release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete latest --repo "${{ github.repository }}" --cleanup-tag --yes 2>$null
+          if ($LASTEXITCODE -ne 0) {
+            Write-Host "No previous latest release to delete."
+            $global:LASTEXITCODE = 0
+          }
+
+          $assets = Get-ChildItem ".work/codex-chatgpt-web/launcher/release" -Filter "*.exe" -File | ForEach-Object { $_.FullName }
+          if (-not $assets) {
+            throw "No EXE assets found for release."
+          }
+
+          gh release create latest @assets `
+            --repo "${{ github.repository }}" `
+            --title "Codex Web Bridge KO - Windows Latest" `
+            --notes "한국어 패치가 적용된 Windows 설치 파일입니다. 아래 Assets에서 .exe 파일을 내려받아 실행하세요. 이 빌드는 main 브랜치 최신 상태에서 자동 생성됩니다." `
+            --latest
