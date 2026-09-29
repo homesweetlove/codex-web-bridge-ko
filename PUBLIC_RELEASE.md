@@ -11,8 +11,8 @@ Public 전환 전 로컬 clone에서 히스토리를 재작성한 뒤 force push
 예시:
 
 ```bash
-git clone --mirror git@github.com:homesweetlove/gpt_is_free.git
-cd gpt_is_free.git
+git clone --mirror git@github.com:homesweetlove/codex-web-bridge-ko.git
+cd codex-web-bridge-ko.git
 
 git filter-repo --force \
   --email-callback 'return b"232012965+homesweetlove@users.noreply.github.com" if email == b"<OLD_EMAIL>" else email'
@@ -55,7 +55,7 @@ README에는 다음이 명시되어야 합니다.
 
 ## 4. 저장소 이름
 
-현재 repository slug가 `gpt_is_free`라면 공개 전 중립적인 이름으로 변경하는 것을 고려하세요.
+현재 repository slug는 `codex-web-bridge-ko`입니다.
 
 예:
 - `codex-web-bridge-ko`
