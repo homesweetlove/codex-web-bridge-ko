@@ -1,127 +1,129 @@
+[![English](https://img.shields.io/badge/README-English-24292f?style=for-the-badge)](./README.md) [![한국어](https://img.shields.io/badge/README-%ED%95%9C%EA%B5%AD%EC%96%B4-24292f?style=for-the-badge)](./README.ko.md)
+
 # Codex Web Bridge KO
 
-> 원본 프로젝트: [miuuyy/codex-chatgpt-web](https://github.com/miuuyy/codex-chatgpt-web)
+> Upstream project: [miuuyy/codex-chatgpt-web](https://github.com/miuuyy/codex-chatgpt-web)
 >
-> 이 저장소는 OpenAI 공식 프로젝트가 아니며, 원본 프로젝트의 MIT 라이선스를 따르는 비공식 한국어 로컬라이징/빌드 레이어입니다.
+> This repository is not an official OpenAI project. It is an unofficial Korean localization/build layer based on the upstream project and follows its MIT license.
 
-Codex 환경에서 ChatGPT Web 모델을 사용할 수 있도록 돕는 `codex-chatgpt-web` 기반 한국어판 작업 저장소입니다.
+This repository is a Korean-oriented working layer for `codex-chatgpt-web`, intended to help use ChatGPT Web models from a Codex environment.
 
-이 저장소는 OpenAI, ChatGPT, Codex, Devin 또는 Cognition의 공식 제품/배포판이 아닙니다. 각 서비스의 상표와 서비스명은 해당 권리자에게 있습니다.
+It is not an official product or distribution of OpenAI, ChatGPT, Codex, Devin, or Cognition. Product and service names remain trademarks of their respective owners.
 
-## 이 저장소가 추가하는 것
+## What This Repository Adds
 
-- 런처 UI 한국어 지원
-- 첫 실행 시 한국어 기본 표시 + 한국어 언어 선택지
-- 설정에서 한국어/영어/중국어/일본어 전환
-- 트레이/제거 확인창 등 네이티브 UI 한국어화
-- 한국어 설치 / 문제 해결 문서
-- 원본 v5.0.6 소스를 자동으로 받아 한국어 패치를 적용하는 스크립트
-- GitHub Actions 기반 Windows 설치 파일 빌드
-- 선택적으로 공식 Devin CLI/ACP를 이용한 별도 로컬 프록시 구성
+- Korean launcher UI
+- Korean default language on first run + Korean language option
+- Korean/English/Chinese/Japanese language switching in settings
+- Korean native UI for tray and uninstall confirmation dialogs
+- Korean installation and troubleshooting documentation
+- Script that downloads the pinned upstream v5.0.6 source and applies the Korean patch automatically
+- GitHub Actions Windows installer build
+- Optional separate local proxy integration using the official Devin CLI/ACP
 
-## 주의: Web 자동화 모드
+## Important: Web Automation Mode
 
-이 프로젝트의 자동화 모드는 ChatGPT 웹페이지와 비공식적으로 상호작용합니다. 서비스 약관, 계정 정책, UI 변경 또는 사용량 제한에 따라 동작이 중단되거나 계정에 영향을 줄 수 있습니다.
+The automation mode interacts with the ChatGPT website unofficially. Service terms, account policies, UI changes, or usage limits may cause it to stop working or affect the account.
 
-공개 배포나 장기 사용 시에는 사용자가 직접 입력/전송하는 `Zero Risk` / 수동 상호작용 모드를 우선 고려하세요. 자동화 모드를 사용하는 경우 각 서비스의 최신 약관과 계정 정책을 직접 확인해야 합니다.
+For public distribution or long-term use, consider the `Zero Risk` / manual-interaction mode first, where the user performs input and submission directly. If automation mode is used, review each service's latest terms and account policies.
 
-## 가장 쉬운 사용법
+## Easiest Usage
 
-### 방법 1 — GitHub Actions로 Windows 설치 파일 만들기
+### Option 1 — Build a Windows Installer with GitHub Actions
 
-1. 이 저장소의 **Actions** 탭으로 이동합니다.
-2. **Build Korean Windows Launcher**를 선택합니다.
-3. **Run workflow**를 누릅니다.
-4. 빌드가 끝나면 Artifacts의 Windows 설치 파일을 받습니다.
-5. ZIP 안의 `.exe` 설치 파일을 실행합니다.
+1. Open the repository's **Actions** tab.
+2. Select **Build Korean Windows Launcher**.
+3. Click **Run workflow**.
+4. When the build finishes, download the Windows installer from Artifacts.
+5. Run the `.exe` installer inside the ZIP.
 
-PC에 Bun이나 Node를 따로 설치할 필요가 없습니다. 자세한 내용은 [Windows 설치 가이드](docs/INSTALL-KO.md)를 참고하세요.
+Bun or Node does not need to be installed separately on the target PC. See the [Windows installation guide](docs/INSTALL-KO.md) for details.
 
-### 방법 2 — 소스에서 바로 실행
+### Option 2 — Run from Source
 
-한국어판 소스만 준비:
+Prepare the Korean source only:
 
 ```powershell
 ./scripts/bootstrap-ko.ps1
 ```
 
-Bun 1.4.0이 설치되어 있다면 소스 준비부터 런처 실행까지:
+If Bun 1.4.0 is installed, prepare the source and launch it in one step:
 
 ```powershell
 ./scripts/bootstrap-ko.ps1 -Run
 ```
 
-스크립트는 원본 v5.0.6의 지정 커밋을 내려받고 예상한 코드 구조가 맞을 때만 한국어 패치를 적용합니다.
+The script downloads the pinned upstream v5.0.6 commit and applies the Korean patch only when the expected source structure matches.
 
-## 사용 흐름
+## Usage Flow
 
-1. 한국어 런처 실행
-2. 런처 안에서 본인 계정으로 로그인
-3. 브라우저 동작 테스트 실행
-4. 모델 설치
-5. Codex 프로세스를 완전히 종료
-6. 런처를 켜 둔 상태에서 Codex 재실행
-7. 모델 선택기에서 연결된 Web 모델 선택
+1. Launch the Korean launcher.
+2. Sign in with your own account inside the launcher.
+3. Run the browser-behavior test.
+4. Install the model integration.
+5. Fully exit the Codex process.
+6. Restart Codex while leaving the launcher running.
+7. Select the connected Web model from the model picker.
 
-## 상호작용 모드
+## Interaction Modes
 
-### Zero Risk / 수동 모드
+### Zero Risk / Manual Mode
 
-런처는 ChatGPT 페이지를 읽거나 조작하지 않습니다. 프롬프트를 준비해 주면 사용자가 직접 붙여넣고 모델/추론 강도/커넥터를 고른 뒤 전송합니다.
+The launcher does not read or manipulate the ChatGPT page. It prepares the prompt, and the user manually pastes it, selects the model/reasoning level/connectors, and submits it.
 
-### 자동화 모드
+### Automation Mode
 
-런처가 ChatGPT 페이지에 프롬프트를 자동으로 보내고 응답 상태를 읽습니다. 편리하지만 비공식 브라우저 자동화이므로 위의 주의사항을 먼저 확인하세요.
+The launcher automatically sends prompts to the ChatGPT page and reads response state. This is convenient, but it is unofficial browser automation, so review the warning above first.
 
-## Codex 모델이 안 보일 때
+## If Codex Models Do Not Appear
 
-PowerShell에서 먼저 설정을 확인하세요.
+Check the configuration in PowerShell:
 
 ```powershell
 Get-Content "$env:USERPROFILE\.codex\config.toml"
 ```
 
-다음 항목이 있어야 합니다.
+The following entry should exist:
 
 ```toml
 openai_base_url = "http://127.0.0.1:17841/v1"
 ```
 
-Codex 창만 닫지 말고 실제 Codex 프로세스까지 종료한 다음 다시 실행해야 모델 목록이 새로고침됩니다.
+Do not only close the Codex window; terminate the actual Codex process and relaunch it so the model list refreshes.
 
-자세한 내용은 [한국어 문제 해결 가이드](docs/TROUBLESHOOTING-KO.md)를 참고하세요.
+See the [Korean troubleshooting guide](docs/TROUBLESHOOTING-KO.md) for more detail.
 
-## Devin 연동
+## Devin Integration
 
-`devin_is_free/` 폴더의 기능은 공식 Devin CLI의 로그인 상태와 실제 계정 entitlement를 그대로 사용합니다. 인증, 사용량 정책 또는 모델 권한을 우회하지 않습니다.
+Features under `devin_is_free/` use the official Devin CLI login state and the account's actual entitlement. They do not bypass authentication, usage policy, or model permissions.
 
-자세한 내용은 [Devin 연동 README](devin_is_free/README.md)를 참고하세요.
+See the [Devin integration README](devin_is_free/README.md).
 
-## 업스트림 버전
+## Upstream Version
 
-현재 한국어 패치 기준:
+Current Korean patch baseline:
 
 - upstream: `miuuyy/codex-chatgpt-web`
 - version: `5.0.6`
 - commit: `e85e3693fdb4e3e033348c08df0298c20fcdb612`
 
-업스트림 정보는 [UPSTREAM.md](UPSTREAM.md)에 기록합니다.
+Upstream details are recorded in [UPSTREAM.md](UPSTREAM.md).
 
-## 보안 및 개인정보
+## Security and Privacy
 
-다음 정보는 이슈, 커밋, 로그, 스크린샷 또는 저장소에 올리지 마세요.
+Do not put the following information in issues, commits, logs, screenshots, or the repository:
 
-- ChatGPT/브라우저 세션 쿠키
-- API 키 및 액세스 토큰
+- ChatGPT/browser session cookies
+- API keys and access tokens
 - GitHub PAT
-- Tunnel ID 및 비공개 런타임 정보
-- 계정 이메일, 학교/회사 계정 정보 등 개인 식별 정보
-- 로컬 전체 로그 및 브라우저 프로필
+- Tunnel IDs and private runtime information
+- Account email addresses, school/company account data, or other identifying information
+- Full local logs or browser profiles
 
-공개 전 점검 항목은 [PUBLIC_RELEASE.md](PUBLIC_RELEASE.md)를 참고하세요.
+See [PUBLIC_RELEASE.md](PUBLIC_RELEASE.md) before public release.
 
-## 라이선스와 출처
+## License and Attribution
 
-원본 프로젝트는 MIT License입니다. 원본 저작권 고지와 라이선스를 유지합니다.
+The upstream project is licensed under MIT. Keep the original copyright notice and license.
 
-이 저장소는 비공식 커뮤니티 프로젝트이며 OpenAI 또는 기타 언급된 서비스 제공자의 보증이나 승인을 의미하지 않습니다.
+This is an unofficial community project and does not imply endorsement or approval by OpenAI or any other mentioned service provider.
